@@ -40,7 +40,7 @@ model.1=lm(SIMS~ARM, data=data)
 abline(model.1) 
 ```
 
-This scatter plot shows simulated strength.  
+This scatter plot shows simulated arm strength.  
 
 ### Numerical results
 ```{r}
@@ -53,24 +53,41 @@ correlation = 0.69 shows moderate positive correlation between SIMS score and AR
 ```{r}
 summary.lm(model.1) 
 ```
-
+Model.1 shows that the intercept and coefficient of ARM are both significantly different from 0. 
 
 #### Predict at target point
-
+```{r}
+targetPoint = data.frame(GRIP=94, ARM=88)
+predictInt = predict(model.1, targetPoint, interval = 'prediction') 
+print(predictInt) 
+```
+At ARM=88, GRIP=94, the predicted SIMS score is 0.706. The 95% confidence interval for that score is SIMS between -1.73 and 3.14. 
 
 #### scatterplot with model fit
+
   
 
 ## Model 2 SIM~GRIP
 
 ### Now add in scatterplot
+```{r}
+plot(SIMS~GRIP,data=data) 
+model.2=lm(SIMS~GRIP, data=data) 
+abline(model.2) 
+```
 
+The scatter plot shows simulated grip strength. 
 
 ### Numerical results 
-
+```{r}
+cor(SIMS~GRIP,data=data)
+``` 
+correlation = 0.64 shows a moderate positive correlation between SIMS score and GRIP strength. 
 
 ### Inferential  (Build model.2)
-  
+```{r}
+summary.lm(model.2) 
+``` 
 
 #### predict model.2 at target point
 
@@ -79,15 +96,26 @@ summary.lm(model.1)
 
 
 ## Model 3 SIM~ARM+GRIP
+```{r}
+model.3 = lm(SIMS~ARM+GRIP, data=data)  
+summary(model.3) 
+```
+
+Both the p-value for ARM and GRIP are both significantly lower than 0 so they help predict the SIMS score. 
 
 ### Numerical results (cor)
-
-`
+```{r}
+cor(data)  
+``` 
   
 ### Inferential  (Build 2-dimentional model.3)
 
+
 #### predict model.3 at target point
-  
+```{r}
+predict(model.3, targetPoint, interval='prediction') 
+```
+
 
 ## Comparing nested models ANOVA Test
 
@@ -96,3 +124,16 @@ summary.lm(model.1)
 
 ## Informally compare Model.1 with model.2
 
+```{r}
+anova_result <- anova(model.1, model.3) 
+print(anova_result) 
+```
+
+The p-value is less than 0.05 therefore model 1 and model 2 are different. Model 2 is better. 
+
+```{r}
+anova_result <- anova(model.2, model.3) 
+print(anova_result) 
+```   
+  
+The p-value is less than 0.05 therefor model 2 and model 3 are different.  
