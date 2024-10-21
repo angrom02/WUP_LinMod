@@ -128,12 +128,11 @@ predict(model.3, targetPoint, interval='prediction')
 anova_result <- anova(model.1, model.3) 
 print(anova_result) 
 ```
-The p-value is 0.00000499 less than 0.05 therefore we reject the null hypothesis. Model 1 and model 3are different. The models are significantly different, therefore we can conclude that Model 3 is better. 
+The p-value is 0.00000499 less than 0.05 therefore we reject the null hypothesis. Model 1 and Model 3 are significantly different because the adjusted r-square for Model 1 is .467 where as Model 3's adjusted r-square is .5358. With this data we can assume that Model 3 is better than Model 1. 
 
 ```{r}
 anova_result <- anova(model.2, model.3) 
 print(anova_result) 
 ```   
   
-The p-value is 0.0000149 which is less than 0.05 therefore we reject the null hypothesis. Model 2 and Model 3 are significantly different and we can conclude that model 3 is better.  
-
+The p-value is 0.0000149 which is less than 0.05 therefore we reject the null hypothesis. Model 2 and Model 3 are significantly different the adjusted r-square for Model 2 is .4053 and the adjusted r-square for Model 3 is .5358 We can conclude that Model 3 is better than Model 2. 
